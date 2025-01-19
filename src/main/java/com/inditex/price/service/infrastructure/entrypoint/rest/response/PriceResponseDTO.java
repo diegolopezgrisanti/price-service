@@ -17,13 +17,13 @@ import java.util.Currency;
 public class PriceResponseDTO {
     @Schema(
             description = "Product ID",
-            example = "35455"
+            example = "{\"id\": 35455}"
     )
     private Product product;
 
     @Schema(
             description = "Brand ID",
-            example = "1"
+            example = "{\"id\": 1}"
     )
     private Brand brand;
 
