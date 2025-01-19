@@ -76,12 +76,6 @@
 			<version>5.15.2</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.javamoney</groupId>
-			<artifactId>moneta</artifactId>
-			<version>1.4.4</version>
-			<type>pom</type>
-		</dependency>
 	</dependencies>
 
 	<build>
