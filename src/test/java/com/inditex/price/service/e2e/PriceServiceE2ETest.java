@@ -1,19 +1,27 @@
 package com.inditex.price.service.e2e;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PriceServiceE2ETest {
 
-    private final String baseUrl = "http://localhost:8080";
+    @LocalServerPort
+    private int port;
+
+    private final String baseUrl = "http://localhost";
 
     @Test
     void testPriceForProductAt10AMOn14thJune() {
         Response response = given()
-                .baseUri(baseUrl)
+                .baseUri(baseUrl + ":" + port)
+                .contentType(ContentType.JSON)
                 .param("productId", 35455)
                 .param("brandId", 1)
                 .param("dateTime", "2020-06-14T10:00:00")
@@ -34,7 +42,8 @@ class PriceServiceE2ETest {
     @Test
     void testPriceForProductAt4PMOn14thJune() {
         Response response = given()
-                .baseUri(baseUrl)
+                .baseUri(baseUrl + ":" + port)
+                .contentType(ContentType.JSON)
                 .param("productId", 35455)
                 .param("brandId", 1)
                 .param("dateTime", "2020-06-14T16:00:00")
@@ -55,7 +64,8 @@ class PriceServiceE2ETest {
     @Test
     void testPriceForProductAt9PMOn14thJune() {
         Response response = given()
-                .baseUri(baseUrl)
+                .baseUri(baseUrl + ":" + port)
+                .contentType(ContentType.JSON)
                 .param("productId", 35455)
                 .param("brandId", 1)
                 .param("dateTime", "2020-06-14T21:00:00")
@@ -77,7 +87,8 @@ class PriceServiceE2ETest {
     @Test
     void testPriceForProductAt10AMOn15thJune() {
         Response response = given()
-                .baseUri(baseUrl)
+                .baseUri(baseUrl + ":" + port)
+                .contentType(ContentType.JSON)
                 .param("productId", 35455)
                 .param("brandId", 1)
                 .param("dateTime", "2020-06-15T10:00:00")
@@ -98,7 +109,8 @@ class PriceServiceE2ETest {
     @Test
     void testPriceForProductAt9PMOn16thJune() {
         Response response = given()
-                .baseUri(baseUrl)
+                .baseUri(baseUrl + ":" + port)
+                .contentType(ContentType.JSON)
                 .param("productId", 35455)
                 .param("brandId", 1)
                 .param("dateTime", "2020-06-16T21:00:00")
