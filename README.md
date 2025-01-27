@@ -115,7 +115,7 @@ In case of errors, the API will return a JSON object with an error message.
 ### Swagger Documentation
 You can view and interact with the full API documentation through Swagger UI. The Swagger documentation provides detailed information on all the available endpoints and how to use them.
 
-- Swagger UI: [http://localhost:8080/swagger-ui](http://localhost:8080/swagger-ui)
+- Swagger UI: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ## Key Dependencies
 
@@ -124,7 +124,7 @@ You can view and interact with the full API documentation through Swagger UI. Th
 - **Spring Validation**: Provides support for validation annotations, used for validating input data.
 - **H2 Database**: An embedded, in-memory database useful for local development and testing (runtime scope).
 - **Lombok**: Provides annotations to reduce boilerplate code like getters, setters, and constructors.
-- **Springdoc OpenAPI**: Provides integration with OpenAPI for auto-generating API documentation and Swagger UI.
+- **SpringDoc OpenAPI**: Provides integration with OpenAPI for auto-generating API documentation and Swagger UI.
 - **Spring Boot Test**: Used for testing the application, including unit and integration tests.
 - **JUnit 5**: A popular testing framework used for writing tests in Java.
 - **Mockito**: A framework used for mocking objects in tests.
