@@ -2,9 +2,12 @@ package com.inditex.price.service.infrastructure.entrypoint.rest;
 
 import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.usecases.FindPricesUseCase;
+import com.inditex.price.service.infrastructure.entrypoint.rest.response.PriceResponseDTO;
+import com.inditex.price.service.infrastructure.mappers.PriceMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -14,18 +17,22 @@ import java.util.Currency;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@WebMvcTest(PriceController.class)
-class PriceEntityControllerContractTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+class PriceControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private FindPricesUseCase findPricesUseCase;
+
+    @MockBean
+    private PriceMapper priceMapper;
+
 
     @Test
     void shouldReturnPriceWhenValidInput() throws Exception {
@@ -36,7 +43,7 @@ class PriceEntityControllerContractTest {
         Price mockPrice = new Price(
                 1L,
                 brandId,
-                LocalDateTime.of(2020, 6, 14, 0,0,0),
+                LocalDateTime.of(2020, 6, 14, 0, 0, 0),
                 LocalDateTime.of(2020, 12, 31, 23, 59, 59),
                 1,
                 productId,
@@ -45,8 +52,18 @@ class PriceEntityControllerContractTest {
                 Currency.getInstance("EUR")
         );
 
+        PriceResponseDTO mockPriceResponseDTO = new PriceResponseDTO();
+        mockPriceResponseDTO.setProductId(35455L);
+        mockPriceResponseDTO.setBrandId(1L);
+        mockPriceResponseDTO.setPriceList(1);
+        mockPriceResponseDTO.setStartDate(LocalDateTime.of(2020, 6, 14, 0, 0, 0));
+        mockPriceResponseDTO.setEndDate(LocalDateTime.of(2020, 12, 31, 23, 59, 59));
+        mockPriceResponseDTO.setFinalPrice(BigDecimal.valueOf(35.50));
+        mockPriceResponseDTO.setCurrency(Currency.getInstance("EUR"));
+
         when(findPricesUseCase.execute(productId, brandId, LocalDateTime.parse(dateTime)))
                 .thenReturn(mockPrice);
+        when(priceMapper.toResponseDTO(mockPrice)).thenReturn(mockPriceResponseDTO);
 
         mockMvc.perform(get("/prices")
                         .param("productId", productId.toString())
@@ -96,5 +113,4 @@ class PriceEntityControllerContractTest {
                         "Invalid date format: " + invalidDateTime
                 ));
     }
-
 }

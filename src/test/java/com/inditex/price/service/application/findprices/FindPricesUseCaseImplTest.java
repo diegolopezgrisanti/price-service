@@ -1,7 +1,7 @@
 package com.inditex.price.service.application.findprices;
 
 import com.inditex.price.service.domain.models.Price;
-import com.inditex.price.service.domain.interfaces.PriceRepository;
+import com.inditex.price.service.domain.database.PriceRepository;
 import com.inditex.price.service.domain.usecases.FindPricesUseCase;
 import org.junit.jupiter.api.Test;
 
@@ -72,5 +72,4 @@ class FindPricesUseCaseImplTest {
         verify(priceRepository, times(1)).findPrices(productId, brandId, dateTime);
 
     }
-
 }

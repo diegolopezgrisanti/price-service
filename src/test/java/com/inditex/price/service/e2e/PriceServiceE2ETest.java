@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class PriceEntityServiceE2ETest {
+class PriceServiceE2ETest {
 
     @LocalServerPort
     private int port;
@@ -82,7 +82,6 @@ class PriceEntityServiceE2ETest {
                 .body("finalPrice", equalTo(35.50F))
                 .body("currency", equalTo("EUR"));
     }
-
 
     @Test
     void testPriceForProductAt10AMOn15thJune() {
