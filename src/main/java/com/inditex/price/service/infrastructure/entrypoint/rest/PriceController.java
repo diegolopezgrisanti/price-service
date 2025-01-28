@@ -6,6 +6,7 @@ import com.inditex.price.service.domain.exception.PriceNotFoundException;
 import com.inditex.price.service.domain.usecases.FindPricesUseCase;
 import com.inditex.price.service.infrastructure.entrypoint.rest.response.PriceResponseDTO;
 import com.inditex.price.service.infrastructure.entrypoint.rest.response.error.ErrorResponseDTO;
+import com.inditex.price.service.infrastructure.mappers.PriceMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,6 +32,7 @@ import java.time.format.DateTimeParseException;
 public class PriceController {
 
     private final FindPricesUseCase findPricesUseCase;
+    private final PriceMapper priceMapper;
 
     @Operation(
             summary = "Get the price for a product",
@@ -113,17 +115,7 @@ public class PriceController {
             throw new PriceNotFoundException(errorMessage);
         }
 
-        PriceResponseDTO priceResponseDTO = new PriceResponseDTO(
-                price.getProductId(),
-                price.getBrandId(),
-                price.getPriceList(),
-                price.getStartDate(),
-                price.getEndDate(),
-                price.getFinalPrice(),
-                price.getCurrency()
-        );
-
-        return ResponseEntity.ok(priceResponseDTO);
+        return ResponseEntity.ok(priceMapper.toResponseDTO(price));
 
     }
 
