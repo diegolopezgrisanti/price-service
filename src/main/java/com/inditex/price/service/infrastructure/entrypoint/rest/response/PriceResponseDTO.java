@@ -13,45 +13,24 @@ import java.util.Currency;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PriceResponseDTO {
-    @Schema(
-            description = "Product ID",
-            example = "{\"id\": 35455}"
-    )
+    @Schema(description = "Product ID", example = "{\"id\": 35455}")
     private Long productId;
 
-    @Schema(
-            description = "Brand ID",
-            example = "{\"id\": 1}"
-    )
+    @Schema(description = "Brand ID", example = "{\"id\": 1}")
     private Long brandId;
 
-    @Schema(
-            description = "Price list identifier",
-            example = "1"
-    )
+    @Schema(description = "Price list identifier", example = "1")
     private Integer priceList;
 
-    @Schema(
-            description = "Start date and time of the price",
-            example = "2020-06-14T00:00:00"
-    )
+    @Schema(description = "Start date and time of the price", example = "2020-06-14T00:00:00")
     private LocalDateTime startDate;
 
-    @Schema(
-            description = "End date and time of the price",
-            example = "2020-12-31T23:59:59"
-    )
+    @Schema(description = "End date and time of the price", example = "2020-12-31T23:59:59")
     private LocalDateTime endDate;
 
-    @Schema(
-            description = "Final price of the product",
-            example = "35.50"
-    )
+    @Schema(description = "Final price of the product", example = "35.50")
     private BigDecimal finalPrice;
 
-    @Schema(
-            description = "Price currency",
-            example = "EUR"
-    )
+    @Schema(description = "Price currency", example = "EUR")
     private Currency currency;
 }
