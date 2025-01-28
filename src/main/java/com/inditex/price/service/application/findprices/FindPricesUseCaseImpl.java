@@ -1,7 +1,7 @@
 package com.inditex.price.service.application.findprices;
 
 import com.inditex.price.service.domain.models.Price;
-import com.inditex.price.service.domain.interfaces.PriceRepository;
+import com.inditex.price.service.domain.database.PriceRepository;
 import com.inditex.price.service.domain.usecases.FindPricesUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
