@@ -1,7 +1,7 @@
 package com.inditex.price.service.infrastructure.entrypoint.rest;
 
-import com.inditex.price.service.application.findprices.FindPricesUseCaseImpl;
 import com.inditex.price.service.domain.models.Price;
+import com.inditex.price.service.domain.usecases.FindPricesUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -25,7 +25,7 @@ class PriceEntityControllerContractTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private FindPricesUseCaseImpl findPricesUseCase;
+    private FindPricesUseCase findPricesUseCase;
 
     @Test
     void shouldReturnPriceWhenValidInput() throws Exception {

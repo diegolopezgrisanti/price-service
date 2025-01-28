@@ -2,6 +2,7 @@ package com.inditex.price.service.application.findprices;
 
 import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.interfaces.PriceRepository;
+import com.inditex.price.service.domain.usecases.FindPricesUseCase;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import static org.mockito.Mockito.*;
 class FindPricesUseCaseImplTest {
 
     private final PriceRepository priceRepository = mock(PriceRepository.class);
-    private final FindPricesUseCaseImpl findPricesUseCaseImpl = new FindPricesUseCaseImpl(priceRepository);
+    private final FindPricesUseCase findPricesUseCase = new FindPricesUseCaseImpl(priceRepository);
 
     Long productId = 35455L;
     Long brandId = 1L;
@@ -39,7 +40,7 @@ class FindPricesUseCaseImplTest {
                 productId, brandId, dateTime)).thenReturn(List.of(expectedPrice));
 
         // WHEN
-        Price result = findPricesUseCaseImpl.execute(productId, brandId, dateTime);
+        Price result = findPricesUseCase.execute(productId, brandId, dateTime);
 
         // THEN
         assertNotNull(result);
@@ -63,7 +64,7 @@ class FindPricesUseCaseImplTest {
                 productId, brandId, dateTime)).thenReturn(List.of());
 
         // WHEN
-        Price result = findPricesUseCaseImpl.execute(productId, brandId, dateTime);
+        Price result = findPricesUseCase.execute(productId, brandId, dateTime);
 
         // THEN
         assertNull(result);

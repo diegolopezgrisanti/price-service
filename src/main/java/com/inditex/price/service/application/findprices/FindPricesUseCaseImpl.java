@@ -2,7 +2,7 @@ package com.inditex.price.service.application.findprices;
 
 import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.interfaces.PriceRepository;
-import com.inditex.price.service.domain.usecases.FindPriceUseCase;
+import com.inditex.price.service.domain.usecases.FindPricesUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FindPricesUseCaseImpl implements FindPriceUseCase {
+public class FindPricesUseCaseImpl implements FindPricesUseCase {
 
     private final PriceRepository priceRepository;
 

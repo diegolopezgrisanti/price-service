@@ -1,9 +1,9 @@
 package com.inditex.price.service.infrastructure.entrypoint.rest;
 
-import com.inditex.price.service.application.findprices.FindPricesUseCaseImpl;
 import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.exception.InvalidDateFormatException;
 import com.inditex.price.service.domain.exception.PriceNotFoundException;
+import com.inditex.price.service.domain.usecases.FindPricesUseCase;
 import com.inditex.price.service.infrastructure.entrypoint.rest.response.PriceResponseDTO;
 import com.inditex.price.service.infrastructure.entrypoint.rest.response.error.ErrorResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +30,7 @@ import java.time.format.DateTimeParseException;
 @RequiredArgsConstructor
 public class PriceController {
 
-    private final FindPricesUseCaseImpl findPricesUseCaseImpl;
+    private final FindPricesUseCase findPricesUseCase;
 
     @Operation(
             summary = "Get the price for a product",
@@ -102,7 +102,7 @@ public class PriceController {
 
         LocalDateTime parsedDateTime = parseDateTime(dateTime);
 
-        Price price = findPricesUseCaseImpl.execute(productId, brandId, parsedDateTime);
+        Price price = findPricesUseCase.execute(productId, brandId, parsedDateTime);
 
         if (price == null) {
             String errorMessage = String.format(
