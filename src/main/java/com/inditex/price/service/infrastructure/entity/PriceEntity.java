@@ -1,4 +1,4 @@
-package com.inditex.price.service.domain;
+package com.inditex.price.service.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,15 +14,14 @@ import java.util.Currency;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Price {
+public class PriceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "brand_id", referencedColumnName = "brand_id", nullable = false)
-    private Brand brand;
+    @Column(name = "brand_id", nullable = false)
+    private Long brandId;
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
@@ -33,9 +32,8 @@ public class Price {
     @Column(name = "price_list", nullable = false)
     private Integer priceList;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
-    private Product product;
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
 
     @Column(name = "priority", nullable = false)
     private Integer priority;

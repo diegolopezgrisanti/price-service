@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class PriceServiceE2ETest {
+class PriceEntityServiceE2ETest {
 
     @LocalServerPort
     private int port;
@@ -30,8 +30,8 @@ class PriceServiceE2ETest {
 
         response.then()
                 .statusCode(200)
-                .body("product.id", equalTo(35455))
-                .body("brand.id", equalTo(1))
+                .body("productId", equalTo(35455))
+                .body("brandId", equalTo(1))
                 .body("priceList", equalTo(1))
                 .body("startDate", equalTo("2020-06-14T00:00:00"))
                 .body("endDate", equalTo("2020-12-31T23:59:59"))
@@ -52,8 +52,8 @@ class PriceServiceE2ETest {
 
         response.then()
                 .statusCode(200)
-                .body("product.id", equalTo(35455))
-                .body("brand.id", equalTo(1))
+                .body("productId", equalTo(35455))
+                .body("brandId", equalTo(1))
                 .body("priceList", equalTo(2))
                 .body("startDate", equalTo("2020-06-14T15:00:00"))
                 .body("endDate", equalTo("2020-06-14T18:30:00"))
@@ -74,8 +74,8 @@ class PriceServiceE2ETest {
 
         response.then()
                 .statusCode(200)
-                .body("product.id", equalTo(35455))
-                .body("brand.id", equalTo(1))
+                .body("productId", equalTo(35455))
+                .body("brandId", equalTo(1))
                 .body("priceList", equalTo(1))
                 .body("startDate", equalTo("2020-06-14T00:00:00"))
                 .body("endDate", equalTo("2020-12-31T23:59:59"))
@@ -97,8 +97,8 @@ class PriceServiceE2ETest {
 
         response.then()
                 .statusCode(200)
-                .body("product.id", equalTo(35455))
-                .body("brand.id", equalTo(1))
+                .body("productId", equalTo(35455))
+                .body("brandId", equalTo(1))
                 .body("priceList", equalTo(3))
                 .body("startDate", equalTo("2020-06-15T00:00:00"))
                 .body("endDate", equalTo("2020-06-15T11:00:00"))
@@ -119,8 +119,8 @@ class PriceServiceE2ETest {
 
         response.then()
                 .statusCode(200)
-                .body("product.id", equalTo(35455))
-                .body("brand.id", equalTo(1))
+                .body("productId", equalTo(35455))
+                .body("brandId", equalTo(1))
                 .body("priceList", equalTo(4))
                 .body("startDate", equalTo("2020-06-15T16:00:00"))
                 .body("endDate", equalTo("2020-12-31T23:59:59"))
