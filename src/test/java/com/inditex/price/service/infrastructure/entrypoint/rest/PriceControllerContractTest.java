@@ -2,6 +2,8 @@ package com.inditex.price.service.infrastructure.entrypoint.rest;
 
 import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.usecases.FindPricesUseCase;
+import com.inditex.price.service.infrastructure.entrypoint.rest.response.PriceResponseDTO;
+import com.inditex.price.service.infrastructure.mappers.PriceMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,13 +21,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(PriceController.class)
-class PriceEntityControllerContractTest {
+class PriceControllerContractTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private FindPricesUseCase findPricesUseCase;
+
+    @MockBean
+    private PriceMapper priceMapper;
 
     @Test
     void shouldReturnPriceWhenValidInput() throws Exception {
@@ -45,8 +50,18 @@ class PriceEntityControllerContractTest {
                 Currency.getInstance("EUR")
         );
 
+        PriceResponseDTO mockPriceResponseDTO = new PriceResponseDTO();
+        mockPriceResponseDTO.setProductId(35455L);
+        mockPriceResponseDTO.setBrandId(1L);
+        mockPriceResponseDTO.setStartDate(LocalDateTime.of(2020, 6, 14, 0,0,0));
+        mockPriceResponseDTO.setEndDate(LocalDateTime.of(2020, 12, 31, 23, 59, 59));
+        mockPriceResponseDTO.setPriceList(1);
+        mockPriceResponseDTO.setFinalPrice(BigDecimal.valueOf(35.50));
+        mockPriceResponseDTO.setCurrency(Currency.getInstance("EUR"));
+
         when(findPricesUseCase.execute(productId, brandId, LocalDateTime.parse(dateTime)))
                 .thenReturn(mockPrice);
+        when(priceMapper.toResponseDTO(mockPrice)).thenReturn(mockPriceResponseDTO);
 
         mockMvc.perform(get("/prices")
                         .param("productId", productId.toString())
