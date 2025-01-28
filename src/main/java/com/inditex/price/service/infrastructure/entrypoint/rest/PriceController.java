@@ -1,7 +1,7 @@
 package com.inditex.price.service.infrastructure.entrypoint.rest;
 
-import com.inditex.price.service.application.findprices.FindPricesUseCase;
-import com.inditex.price.service.domain.Price;
+import com.inditex.price.service.application.findprices.FindPricesUseCaseImpl;
+import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.exception.InvalidDateFormatException;
 import com.inditex.price.service.domain.exception.PriceNotFoundException;
 import com.inditex.price.service.infrastructure.entrypoint.rest.response.PriceResponseDTO;
@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +27,10 @@ import java.time.format.DateTimeParseException;
         name = "Price API",
         description = "API for retrieving and managing product prices based on product ID, brand, and date/time criteria."
 )
+@RequiredArgsConstructor
 public class PriceController {
 
-    private final FindPricesUseCase findPricesUseCase;
-
-    public PriceController(FindPricesUseCase findPricesUseCase) {
-        this.findPricesUseCase = findPricesUseCase;
-    }
+    private final FindPricesUseCaseImpl findPricesUseCaseImpl;
 
     @Operation(
             summary = "Get the price for a product",
@@ -104,7 +102,7 @@ public class PriceController {
 
         LocalDateTime parsedDateTime = parseDateTime(dateTime);
 
-        Price price = findPricesUseCase.execute(productId, brandId, parsedDateTime);
+        Price price = findPricesUseCaseImpl.execute(productId, brandId, parsedDateTime);
 
         if (price == null) {
             String errorMessage = String.format(
@@ -116,8 +114,8 @@ public class PriceController {
         }
 
         PriceResponseDTO priceResponseDTO = new PriceResponseDTO(
-                price.getProduct(),
-                price.getBrand(),
+                price.getProductId(),
+                price.getBrandId(),
                 price.getPriceList(),
                 price.getStartDate(),
                 price.getEndDate(),

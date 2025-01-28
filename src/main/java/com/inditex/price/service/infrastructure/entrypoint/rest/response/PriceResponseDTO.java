@@ -1,7 +1,5 @@
 package com.inditex.price.service.infrastructure.entrypoint.rest.response;
 
-import com.inditex.price.service.domain.Brand;
-import com.inditex.price.service.domain.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,13 +17,13 @@ public class PriceResponseDTO {
             description = "Product ID",
             example = "{\"id\": 35455}"
     )
-    private Product product;
+    private Long productId;
 
     @Schema(
             description = "Brand ID",
             example = "{\"id\": 1}"
     )
-    private Brand brand;
+    private Long brandId;
 
     @Schema(
             description = "Price list identifier",

@@ -1,9 +1,7 @@
 package com.inditex.price.service.infrastructure.entrypoint.rest;
 
-import com.inditex.price.service.application.findprices.FindPricesUseCase;
-import com.inditex.price.service.domain.Brand;
-import com.inditex.price.service.domain.Price;
-import com.inditex.price.service.domain.Product;
+import com.inditex.price.service.application.findprices.FindPricesUseCaseImpl;
+import com.inditex.price.service.domain.models.Price;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,13 +19,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(PriceController.class)
-class PriceControllerContractTest {
+class PriceEntityControllerContractTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private FindPricesUseCase findPricesUseCase;
+    private FindPricesUseCaseImpl findPricesUseCase;
 
     @Test
     void shouldReturnPriceWhenValidInput() throws Exception {
@@ -35,16 +33,13 @@ class PriceControllerContractTest {
         Long brandId = 1L;
         String dateTime = "2020-06-14T10:00:00";
 
-        Brand brand = new Brand(brandId);
-        Product product = new Product(productId);
-
         Price mockPrice = new Price(
                 1L,
-                brand,
+                brandId,
                 LocalDateTime.of(2020, 6, 14, 0,0,0),
                 LocalDateTime.of(2020, 12, 31, 23, 59, 59),
                 1,
-                product,
+                productId,
                 0,
                 BigDecimal.valueOf(35.50),
                 Currency.getInstance("EUR")
@@ -58,8 +53,8 @@ class PriceControllerContractTest {
                         .param("brandId", brandId.toString())
                         .param("dateTime", dateTime))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.product.id").value(35455))
-                .andExpect(jsonPath("$.brand.id").value(1))
+                .andExpect(jsonPath("$.productId").value(35455))
+                .andExpect(jsonPath("$.brandId").value(1))
                 .andExpect(jsonPath("$.priceList").value(1))
                 .andExpect(jsonPath("$.startDate").value("2020-06-14T00:00:00"))
                 .andExpect(jsonPath("$.endDate").value("2020-12-31T23:59:59"))

@@ -1,7 +1,7 @@
 package com.inditex.price.service.infrastructure.config;
 
-import com.inditex.price.service.application.findprices.FindPricesUseCase;
-import com.inditex.price.service.domain.PriceRepository;
+import com.inditex.price.service.application.findprices.FindPricesUseCaseImpl;
+import com.inditex.price.service.domain.interfaces.PriceRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Configuration;
 public class UseCasesConfig {
 
     @Bean
-    public FindPricesUseCase findPriceUseCase(
+    public FindPricesUseCaseImpl findPriceUseCaseImpl(
             PriceRepository priceRepository
     ) {
-        return new FindPricesUseCase(priceRepository);
+        return new FindPricesUseCaseImpl(priceRepository);
     }
 }
