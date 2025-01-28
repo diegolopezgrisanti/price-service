@@ -129,6 +129,7 @@ You can view and interact with the full API documentation through Swagger UI. Th
 - **JUnit 5**: A popular testing framework used for writing tests in Java.
 - **Mockito**: A framework used for mocking objects in tests.
 - **Rest-Assured**: Used for making HTTP requests and validating responses in integration and end-to-end tests.
+- **MapStruct**: A Java annotation processor that simplifies the implementation of mappings between Java bean types.
 
 ## Additional Documentation
 
