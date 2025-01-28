@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.inditex</groupId>
-	<artifactId>priceEntity-service</artifactId>
+	<artifactId>price-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>priceEntity-service</name>
+	<name>price-service</name>
 	<description>A service to manage and retrieve pricing information</description>
 	<url/>
 	<licenses>
