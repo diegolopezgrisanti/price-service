@@ -2,7 +2,6 @@ package com.inditex.price.service.infrastructure.entrypoint.rest;
 
 import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.exception.InvalidDateFormatException;
-import com.inditex.price.service.domain.exception.PriceNotFoundException;
 import com.inditex.price.service.domain.usecases.FindPricesUseCase;
 import com.inditex.price.service.infrastructure.entrypoint.rest.response.PriceResponseDTO;
 import com.inditex.price.service.infrastructure.entrypoint.rest.response.error.ErrorResponseDTO;
@@ -103,17 +102,7 @@ public class PriceController {
     ) {
 
         LocalDateTime parsedDateTime = parseDateTime(dateTime);
-
         Price price = findPricesUseCase.execute(productId, brandId, parsedDateTime);
-
-        if (price == null) {
-            String errorMessage = String.format(
-                    "Price not found for the given productId: %d and brandId: %d",
-                    productId,
-                    brandId
-            );
-            throw new PriceNotFoundException(errorMessage);
-        }
 
         return ResponseEntity.ok(priceMapper.toResponseDTO(price));
 
