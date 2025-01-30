@@ -1,5 +1,6 @@
 package com.inditex.price.service.application.findprices;
 
+import com.inditex.price.service.domain.exception.PriceNotFoundException;
 import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.database.PriceRepository;
 import com.inditex.price.service.domain.usecases.FindPricesUseCase;
@@ -7,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +17,10 @@ public class FindPricesUseCaseImpl implements FindPricesUseCase {
 
     @Override
     public Price execute(Long productId, Long brandId, LocalDateTime dateTime) {
-        List<Price> price = priceRepository.findPrices(productId, brandId, dateTime);
 
-        return price.isEmpty() ? null : price.getFirst();
+        return priceRepository.findPrices(productId, brandId, dateTime)
+                .orElseThrow(() -> new PriceNotFoundException(
+                        String.format("Price not found for productId: %d and brandId: %d", productId, brandId)
+                ));
     }
 }

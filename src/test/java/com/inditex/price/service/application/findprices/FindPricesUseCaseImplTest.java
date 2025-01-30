@@ -1,5 +1,6 @@
 package com.inditex.price.service.application.findprices;
 
+import com.inditex.price.service.domain.exception.PriceNotFoundException;
 import com.inditex.price.service.domain.models.Price;
 import com.inditex.price.service.domain.database.PriceRepository;
 import com.inditex.price.service.domain.usecases.FindPricesUseCase;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
-import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -23,7 +24,7 @@ class FindPricesUseCaseImplTest {
     LocalDateTime dateTime = LocalDateTime.of(2020, 6, 14, 16, 0, 0);
 
     @Test
-    void shouldReturnPriceWhenListIsNotEmpty() {
+    void shouldReturnPriceWhenFound() {
         // GIVEN
         Price expectedPrice = new Price(
                 1L,
@@ -37,7 +38,7 @@ class FindPricesUseCaseImplTest {
                 Currency.getInstance("EUR")
         );
         when(priceRepository.findPrices(
-                productId, brandId, dateTime)).thenReturn(List.of(expectedPrice));
+                productId, brandId, dateTime)).thenReturn(Optional.of(expectedPrice));
 
         // WHEN
         Price result = findPricesUseCase.execute(productId, brandId, dateTime);
@@ -45,7 +46,6 @@ class FindPricesUseCaseImplTest {
         // THEN
         assertNotNull(result);
         assertEquals(expectedPrice, result);
-
         assertEquals(brandId, result.getBrandId());
         assertEquals(Integer.valueOf(1), result.getPriceList());
         assertEquals(productId, result.getProductId());
@@ -58,18 +58,16 @@ class FindPricesUseCaseImplTest {
     }
 
     @Test
-    void shouldReturnNullWhenPriceListIsEmpty() {
+    void shouldThrowPriceNotFoundExceptionWhenNoPriceFound() {
         // GIVEN
         when(priceRepository.findPrices(
-                productId, brandId, dateTime)).thenReturn(List.of());
+                productId, brandId, dateTime)).thenReturn(Optional.empty());
 
-        // WHEN
-        Price result = findPricesUseCase.execute(productId, brandId, dateTime);
-
-        // THEN
-        assertNull(result);
+        // WHEN & THEN
+        PriceNotFoundException exception = assertThrows(PriceNotFoundException.class,
+                () -> findPricesUseCase.execute(productId, brandId, dateTime));
+        assertEquals("Price not found for productId: 35455 and brandId: 1", exception.getMessage());
 
         verify(priceRepository, times(1)).findPrices(productId, brandId, dateTime);
-
     }
 }
